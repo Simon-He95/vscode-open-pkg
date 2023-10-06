@@ -1,0 +1,87 @@
+{
+  "publisher": "simonhe",
+  "name": "vscode-open-pkg",
+  "displayName": "vscode-open-pkg",
+  "version": "0.0.0",
+  "packageManager": "pnpm@8.1.1",
+  "description": "vscode-open-pkg",
+  "author": "Simon He <https://github.com/Simon-He95>",
+  "license": "MIT",
+  "funding": "https://github.com/sponsors/Simon-He95",
+  "homepage": "https://github.com/Simon-He95/vscode-open-pkg#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Simon-He95/vscode-open-pkg"
+  },
+  "bugs": {
+    "url": "https://github.com/Simon-He95/vscode-open-pkg/issues"
+  },
+  "sponsor": {
+    "url": "https://github.com/Simon-He95/sponsor"
+  },
+  "categories": [
+    "Other"
+  ],
+  "main": "./dist/index.js",
+  "icon": "icon.png",
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "vscode": "^1.77.0"
+  },
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "contributes": {
+    "menus": {
+      "editor/context": [
+        {
+          "when": "editorFocus && editorHasSelection",
+          "command": "vscode-open-pkg.openUrl",
+          "group": "6_px"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "vscode-open-pkg.openUrl",
+        "title": "open pkg"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "vscode-open-pkg.openUrl",
+        "key": "cmd+r"
+      }
+    ]
+  },
+  "scripts": {
+    "dev": "pnpm build --watch",
+    "test": "vitest",
+    "build": "tsup src/index.ts --external vscode",
+    "pack": "vsce package --no-dependencies",
+    "lint": "eslint . --ext .vue,.js,.ts,.jsx,.tsx,.md,.json --max-warnings 0 --cache",
+    "lint:fix": "eslint . --ext .vue,.js,.ts,.jsx,.tsx,.md,.json --max-warnings 0 --cache --fix",
+    "publish": "vsce publish --no-dependencies",
+    "typecheck": "tsc --noEmit",
+    "release": "bumpp && pnpm run publish"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^0.38.4",
+    "@types/node": "^18.15.11",
+    "@types/vscode": "^1.77.0",
+    "@vscode-use/utils": "^0.0.43",
+    "bumpp": "^9.1.0",
+    "eslint": "^8.37.0",
+    "esno": "^0.16.3",
+    "lazy-js-utils": "^0.0.67",
+    "pnpm": "^8.1.1",
+    "rimraf": "^4.4.1",
+    "tsup": "^6.7.0",
+    "typescript": "^5.0.3",
+    "vite": "^4.2.1",
+    "vitest": "^0.29.8",
+    "vsce": "^2.15.0"
+  }
+}
