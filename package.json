@@ -37,7 +37,7 @@
     "menus": {
       "editor/context": [
         {
-          "when": "editorFocus && editorHasSelection",
+          "when": "editorFocus",
           "command": "vscode-open-pkg.openUrl",
           "group": "6_px"
         }
@@ -52,7 +52,13 @@
     "keybindings": [
       {
         "command": "vscode-open-pkg.openUrl",
-        "key": "cmd+r"
+        "key": "cmd+r",
+        "when": "isMac"
+      },
+      {
+        "command": "vscode-open-pkg.openUrl",
+        "key": "ctrl+r",
+        "when": "!isMac"
       }
     ]
   },
