@@ -5,9 +5,10 @@ import type { ExtensionContext } from 'vscode'
 export function activate(context: ExtensionContext) {
   const importReg = /import\s+.*?\s+from\s+['"]([^'"]+)['"]/
   const requireReg = /require\s*\(\s*['"]([^'"]+)['"]\s*\)/
+  const isNpmPackage = /^(?:@[a-z0-9][a-z0-9-_.]*)?\/?[a-z0-9][a-z0-9-_.]*$/
   context.subscriptions.push(registerCommand('vscode-open-pkg.openUrl', () => {
     try {
-      const { selectedTextArray, lineText } = getSelection()!
+      const { selectedTextArray, lineText, character } = getSelection()!
       let title = selectedTextArray[0].replace(/['"\s]/g, '')
       if (!title) {
         const importMatch = lineText.match(importReg)
@@ -16,11 +17,27 @@ export function activate(context: ExtensionContext) {
         }
         else {
           const requireMatch = lineText.match(requireReg)
-          if (requireMatch)
+          if (requireMatch) {
             title = requireMatch[1]
+          }
+          else {
+            let temp = ''
+            let pre = character
+            while (pre >= 0 && !/['"\s\n]/.test(lineText[pre])) {
+              temp = `${lineText[pre]}${temp}`
+              pre--
+            }
+            let suffix = character + 1
+            while (suffix < lineText.length && !/['"\s\n]/.test(lineText[suffix])) {
+              temp = `${temp}${lineText[suffix]}`
+              suffix++
+            }
+            title = temp
+          }
         }
       }
-      if (!title || /^[\.\~\/]/.test(title)) {
+
+      if (!title || /^[\.\~\/]/.test(title) || !isNpmPackage.test(title)) {
         message.error('请选择一个正确的npm包名')
         return
       }
