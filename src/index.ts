@@ -3,6 +3,7 @@ import { jsShell } from 'lazy-js-utils'
 import type { ExtensionContext } from 'vscode'
 
 export function activate(context: ExtensionContext) {
+  const urlReg = /^https?:\/\/[^\s\/$.?#].[^\s]*$/gm
   context.subscriptions.push(registerCommand('vscode-open-pkg.openUrl', () => {
     const { selectedTextArray } = getSelection()!
     const title = selectedTextArray[0].replace(/['"\s]/g, '')
@@ -16,8 +17,8 @@ export function activate(context: ExtensionContext) {
     }
     else {
       const url = result.split('\n')[2]
-      if (!url) {
-        message.error('没有找到对应的npm包')
+      if (!url || !urlReg.test(url)) {
+        message.error('没有找到对应的npm包的主页地址')
         return
       }
       openExternalUrl(url)
