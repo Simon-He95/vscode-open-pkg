@@ -4,10 +4,23 @@ import type { ExtensionContext } from 'vscode'
 
 export function activate(context: ExtensionContext) {
   const urlReg = /^https?:\/\/[^\s\/$.?#].[^\s]*$/gm
+  const importReg = /import\s+.*?\s+from\s+['"]([^'"]+)['"]/
+  const requireReg = /require\s*\(\s*['"]([^'"]+)['"]\s*\)/
   context.subscriptions.push(registerCommand('vscode-open-pkg.openUrl', () => {
-    const { selectedTextArray } = getSelection()!
-    const title = selectedTextArray[0].replace(/['"\s]/g, '')
-    if (/[\.\~\/]/.test(title)) {
+    const { selectedTextArray, lineText } = getSelection()!
+    let title = selectedTextArray[0].replace(/['"\s]/g, '')
+    if (!title) {
+      const importMatch = lineText.match(importReg)
+      if (importMatch) {
+        title = importMatch[1]
+      }
+      else {
+        const requireMatch = lineText.match(requireReg)
+        if (requireMatch)
+          title = requireMatch[1]
+      }
+    }
+    if (!title || /^[\.\~\/]/.test(title)) {
       message.error('请选择一个正确的npm包名')
       return
     }
