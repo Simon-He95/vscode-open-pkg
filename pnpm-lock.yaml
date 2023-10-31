@@ -17,12 +17,9 @@ importers:
       '@types/vscode':
         specifier: ^1.77.0
         version: 1.77.0
-      '@vscode-use/createwebview':
-        specifier: ^0.0.11
-        version: 0.0.11
       '@vscode-use/utils':
-        specifier: ^0.0.43
-        version: 0.0.43
+        specifier: ^0.0.55
+        version: 0.0.55
       bumpp:
         specifier: ^9.1.0
         version: 9.1.0
@@ -724,13 +721,8 @@ packages:
       pretty-format: 27.5.1
     dev: true
 
-  /@vscode-use/createwebview@0.0.11:
-    resolution: {integrity: sha512-MWsrNgnvxWrYC3yvADk15mCBTFII1OwefRKdEi2g6NWPbxF1VWb0QFyuLkTwfLD/OduoYQlSvuI7TStxJvaWPQ==}
-    engines: {vscode: ^1.77.0}
-    dev: true
-
-  /@vscode-use/utils@0.0.43:
-    resolution: {integrity: sha512-7Ex5M3cu7p8h05s4oOQYgX/p2P3xV0NWWa8+w5ckN4i4aXukb7HtLXzsv92kGYpHWbqPUSwjU6HIrNN3VQtvmQ==}
+  /@vscode-use/utils@0.0.55:
+    resolution: {integrity: sha512-zUoErEzuq74GY91YYxJIYaHwicp21+6RnpN79mtslkSS/5o/ZQu7sF7JLf9hZ/YssbOsGfLc2pnU8gHoX1dw3w==}
     engines: {vscode: ^1.77.0}
     dev: true
 
