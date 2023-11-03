@@ -1,12 +1,12 @@
 import { getLocale, getSelection, message, openExternalUrl, registerCommand } from '@vscode-use/utils'
-import { jsShell } from 'lazy-js-utils'
+import { isWin, jsShell } from 'lazy-js-utils'
 import type { ExtensionContext } from 'vscode'
 
 export function activate(context: ExtensionContext) {
   const importReg = /import\s+.*?\s+from\s+['"]([^'"]+)['"]/
   const requireReg = /require\s*\(\s*['"]([^'"]+)['"]\s*\)/
   const isNpmPackage = /^(?:@[a-z0-9][a-z0-9-_.]*)?\/?[a-z0-9][a-z0-9-_.]*$/
-  
+
   context.subscriptions.push(registerCommand('vscode-open-pkg.openUrl', () => {
     const isZh = getLocale().includes('zh')
     try {
@@ -48,7 +48,7 @@ export function activate(context: ExtensionContext) {
         message.error(result)
       }
       else {
-        const url = result.split('\n')[2]
+        const url = result.split(isWin() ? '\r' : '\n')[2]
         if (!url || !url.startsWith('http')) {
           message.error(isZh ? `没有找到对应的${title}对应的npm包的主页地址` : `The homepage address of the npm package corresponding to ${title} was not found.`)
           return
