@@ -1,13 +1,13 @@
-import { getLocale, getSelection, message, openExternalUrl, registerCommand } from '@vscode-use/utils'
-import { isWin, jsShell } from 'lazy-js-utils'
-import type { ExtensionContext } from 'vscode'
+import { createExtension, getLocale, getSelection, message, openExternalUrl, registerCommand } from '@vscode-use/utils'
+import { isWin } from 'lazy-js-utils'
+import { jsShell } from 'lazy-js-utils/dist/node'
 
-export function activate(context: ExtensionContext) {
+export = createExtension(() => {
   const importReg = /import\s+.*?\s+from\s+['"]([^'"]+)['"]/
   const requireReg = /require\s*\(\s*['"]([^'"]+)['"]\s*\)/
   const isNpmPackage = /^(?:@[a-z0-9][a-z0-9-_.]*)?\/?[a-z0-9][a-z0-9-_.]*$/
 
-  context.subscriptions.push(registerCommand('vscode-open-pkg.openUrl', () => {
+  registerCommand('vscode-open-pkg.openUrl', async () => {
     const isZh = getLocale().includes('zh')
     try {
       const { selectedTextArray, lineText, character } = getSelection()!
@@ -25,12 +25,12 @@ export function activate(context: ExtensionContext) {
           else {
             let temp = ''
             let pre = character
-            while (pre >= 0 && !/['"\s\n]/.test(lineText[pre])) {
+            while (pre >= 0 && !/[!'"\s\n:\u4E00-\u9FA5]/.test(lineText[pre])) {
               temp = `${lineText[pre]}${temp}`
               pre--
             }
             let suffix = character + 1
-            while (suffix < lineText.length && !/['"\s\n]/.test(lineText[suffix])) {
+            while (suffix < lineText.length && !/[!'"\s\n:\u4E00-\u9FA5]/.test(lineText[suffix])) {
               temp = `${temp}${lineText[suffix]}`
               suffix++
             }
@@ -43,7 +43,7 @@ export function activate(context: ExtensionContext) {
         message.error(isZh ? `请选择一个正确的npm包名(${title})` : `Please choose a correct npm package name(${title}).`)
         return
       }
-      const { status, result } = jsShell(`npm view ${title}`, 'pipe')
+      const { status, result } = await jsShell(`npm view ${title}`, 'pipe')
       if (status !== 0) {
         message.error(result)
       }
@@ -59,9 +59,5 @@ export function activate(context: ExtensionContext) {
     catch (error) {
       console.error(error)
     }
-  }))
-}
-
-export function deactivate() {
-
-}
+  })
+})

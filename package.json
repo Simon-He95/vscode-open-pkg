@@ -24,9 +24,6 @@
   ],
   "main": "./dist/index.js",
   "icon": "icon.png",
-  "files": [
-    "dist"
-  ],
   "engines": {
     "vscode": "^1.77.0"
   },
@@ -77,17 +74,16 @@
     "@antfu/eslint-config": "^0.38.4",
     "@types/node": "^18.15.11",
     "@types/vscode": "^1.77.0",
-    "@vscode-use/utils": "^0.0.55",
+    "@vscode-use/utils": "^0.1.39",
+    "@vscode/vsce": "^3.2.1",
     "bumpp": "^9.1.0",
     "eslint": "^8.37.0",
     "esno": "^0.16.3",
-    "lazy-js-utils": "^0.0.67",
+    "lazy-js-utils": "^0.1.28",
     "pnpm": "^8.1.1",
     "rimraf": "^4.4.1",
     "tsup": "^6.7.0",
     "typescript": "^5.0.3",
-    "vite": "^4.2.1",
-    "vitest": "^0.29.8",
-    "vsce": "^2.15.0"
+    "vitest": "^0.29.8"
   }
 }
