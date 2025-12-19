@@ -3,7 +3,7 @@
 </p>
 <p align="center"> English | <a href="./README_zh.md">简体中文</a></p>
 
-Quickly open the home page of a third-party library, select the package name + `command+r` to open an external browser, or click the line with the mouse, press `command+r`, and it will automatically analyze the dependent package of *import* or *require* to open an external browser.
+Quickly open a third-party package page: select the package name + `command+r`, or place the cursor on an *import* / *require* / `import()` line (or inside a quoted package name) and press `command+r`. Supports subpath imports like `react-dom/client` (opens `react-dom`). If homepage is missing, it falls back to repository, then the npm package page.
 
 ![demo](assets/demo.gif)
 
