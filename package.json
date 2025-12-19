@@ -23,13 +23,6 @@
   ],
   "main": "./dist/index.cjs",
   "icon": "icon.png",
-  "files": [
-    "LICENSE",
-    "README.md",
-    "README_zh.md",
-    "dist",
-    "icon.png"
-  ],
   "engines": {
     "vscode": "^1.77.0"
   },
